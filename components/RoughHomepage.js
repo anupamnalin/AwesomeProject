@@ -5,36 +5,20 @@ import {
   View,
   Image,
   TouchableOpacity,
-  Button,
-  Modal,
-  ToolbarAndroid,
-  TextInput
   } from 'react-native';
 
   import { StackNavigator } from 'react-navigation';
-  import Icon from 'react-native-vector-icons/MaterialIcons';
 
 export default class HomeScreen extends React.Component {
   constructor(props) {
     super(props);
       this.state= {
-        show: false,
-        email: '',
-        password: ''
       }
   }
 
   static navigationOptions = {
     header: null,
   };
-
-  onLogin() {
-    this.setState({show: true})
-  }
-
-  onClose() {
-    this.setState({show: false})
-  }
 
   render() {
     const { navigate } = this.props.navigation;
@@ -49,12 +33,6 @@ export default class HomeScreen extends React.Component {
           <Text style={[styles.heading, {fontSize: 10}]}>traditionally one of the most potebnt symbols of french culture.</Text>
           <Text style={[styles.heading, {fontSize: 10}]}>culture.</Text>
         </View>
-
-        <Button
-          onPress={this.onLogin.bind(this)}
-          title="Login"
-          />
-
         </Image>
 
         <View style={{flexDirection: 'row', marginTop: 10}}>
@@ -68,43 +46,6 @@ export default class HomeScreen extends React.Component {
             </TouchableOpacity>
             <Image source={require('./images/Notifi_Btn_nrm.png')}  style={{ height: 40}} resizeMode={Image.resizeMode.contain} />
         </View>
-
-        <Modal
-          animationType={"fade"}
-          transparent={false}
-          visible={this.state.show}
-          onRequestClose={() => {console.log("Modal has been closed.")}}>
-
-
-          <Image source={require('./images/landing-page.png')} style={{height: 200, width: 480}}>
-          <View>
-            <View style={{marginLeft: 10, marginTop: 10}}>
-              <Icon name="close" size={36} color="white"  onPress={() => this.onClose()} />
-            </View>
-              <Text style={[styles.heading, {fontSize: 30, marginTop: 50, marginLeft: 20}]}>LOGIN</Text>
-          </View>
-          </Image>
-
-          <TextInput
-            style={{borderWidth: 1,  margin: 10, fontSize: 15, padding: 5}}
-            onChangeText={(email) => this.setState({email})}
-            value={this.state.email}
-            underlineColorAndroid={'transparent'}
-            placeholder={'Enter your email-address'}
-          />
-
-          <TextInput
-            style={{borderWidth: 1,  margin: 10, fontSize: 15, padding: 5}}
-            onChangeText={(password) => this.setState({password})}
-            value={this.state.password}
-            underlineColorAndroid={'transparent'}
-            placeholder={'Enter your password'}
-          />
-
-
-
-          </Modal>
-
 
       </View>
     );
