@@ -19,6 +19,31 @@ export default class CartScreen extends React.Component {
       }
   }
 
+  loadCart() {
+    responseData=
+    [
+      {
+        "resturantName": "Moets Curry Leaf",
+            "menu": {
+              "dish": "Noodle Soup",
+              "description": "Boiled noodle served in a pot with broth",
+              "price": 2.99
+              },
+          "resturantName": "Cafe 5h by the Kitchen",
+              "menu": {
+                "dish": "Veg Mixed Fried Rice",
+                "description": "Boiled noodle served in a pot with broth",
+                "price": 10.00,
+              },
+              "menu": {
+                "dish": "Paneer Tikka",
+                "description": "Boiled noodle served in a pot with broth",
+                "price": 5.99,
+              }
+        }
+    ]
+  }
+
   onBack() {
     this.props.navigation.pop()
   }

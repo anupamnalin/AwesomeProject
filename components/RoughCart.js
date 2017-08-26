@@ -39,7 +39,7 @@ export default class CartScreen extends React.Component {
       <View style={styles.container}>
 
       <View style={styles.toolbarView}>
-        <View style={{}}>
+        <View>
           <Icon name="keyboard-arrow-left" size={36} color="white"  onPress={() => goBack()} />
         </View>
         <View>
