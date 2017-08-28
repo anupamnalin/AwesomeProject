@@ -4,7 +4,7 @@ import {
   Text,
   View,
   Image,
-  TouchableHighlight,
+  TouchableOpacity,
   Modal,
   ToolbarAndroid
   } from 'react-native';
@@ -17,15 +17,47 @@ export default class CartScreen extends React.Component {
     super(props);
       this.state= {
       }
+      this.onCompleteOrder= this.onCompleteOrder.bind(this)
   }
 
-  onBack() {
+  loadCart() {
+    responseData=
+    {
+        "resturants": [
+            {
+            "Name": "Moets Curry Leaf",
+            "menu": {
+              "dish": "Noodle Soup",
+              "description": "Boiled noodle served in a pot with broth",
+              "price": 2.99
+              }
+            },
+            {
+              "Name": "Cafe 5h by the Kitchen",
+              "menu":[
+              {
+                "dish": "Veg Mixed Fried Rice",
+                "description": "Boiled noodle served in a pot with broth",
+                "price": 10.00,
+              },
+              {
+                "dish": "Paneer Tikka",
+                "description": "Boiled noodle served in a pot with broth",
+                "price": 5.99,
+              }
+            ]
+          }
+        ]
+      }
+      }
 
+  onBack() {
+    this.props.navigation.pop()
   }
 
   static navigationOptions = {
-   title: 'Welcome',
- };
+    header: null,
+  };
 
 
   onCompleteOrder() {
@@ -33,14 +65,14 @@ export default class CartScreen extends React.Component {
   }
 
   render() {
-    const { navigate } = this.props.navigation;
+    const { goBack } = this.props.navigation;
 
     return (
       <View style={styles.container}>
 
       <View style={styles.toolbarView}>
-        <View style={{}}>
-          <Icon name="keyboard-arrow-left" size={36} color="white" onPress={() => this.onBack.bind(this)}/>
+        <View>
+          <Icon name="keyboard-arrow-left" size={36} color="white"  onPress={() => goBack()} />
         </View>
         <View>
           <Text style={{color: 'white', fontSize:16, textAlign: 'center'}}>Cart</Text>
@@ -56,7 +88,7 @@ export default class CartScreen extends React.Component {
       </View>
 
       <View style={{margin: 5, flexDirection: 'row', borderWidth: .25, backgroundColor: 'white'}}>
-      <Image source={require('./images/imgmenu1.png')}
+      <Image source={require('./../images/imgmenu1.png')}
         style={{height: 50, width: 50, margin: 5}} />
       <View style={{margin: 5}}>
         <Text style={{color: 'grey'}}>Noodle Soup</Text>
@@ -76,7 +108,7 @@ export default class CartScreen extends React.Component {
       </View>
 
       <View style={{margin: 5, flexDirection: 'row', borderWidth: .25, backgroundColor: 'white'}}>
-      <Image source={require('./images/imgmenu11.png')}
+      <Image source={require('./../images/imgmenu11.png')}
         style={{height: 50, width: 50, margin: 5}} />
       <View style={{margin: 5}}>
         <Text style={{color: 'grey'}}>Veg Mixed Fried Rice</Text>
@@ -91,7 +123,7 @@ export default class CartScreen extends React.Component {
       </View>
 
       <View style={{margin: 5, flexDirection: 'row', borderWidth: .25, backgroundColor: 'white'}}>
-      <Image source={require('./images/imgmenu3.png')}
+      <Image source={require('./../images/imgmenu3.png')}
         style={{height: 50, width: 50, margin: 5}} />
       <View style={{margin: 5}}>
         <Text style={{color: 'grey'}}>Paneer Tikka</Text>
@@ -120,55 +152,68 @@ export default class CartScreen extends React.Component {
         <Text style={{fontSize: 10}}>$15.99</Text>
       </View>
 
-      <View style={{justifyContent: 'flex-end', alignItems: 'flex-end', margin: 10}}>
-      <TouchableHighlight onPress={this.onCompleteOrder.bind(this)} style={{width: 150, height: 30, alignItems: 'center', justifyContent: 'center', borderRadius:3, backgroundColor: 'orange'}}>
-        <Text style={{color: 'white', alignItems: 'center', fontSize: 11}}>COMPLETE ORDER</Text>
-      </TouchableHighlight>
+      <View style={{justifyContent: 'flex-end', alignItems: 'flex-end', margin: 5}}>
+      <TouchableOpacity onPress={this.onCompleteOrder} style={{width: 150, height: 20, alignItems: 'center', justifyContent: 'center', backgroundColor: 'orange'}}>
+        <Text style={{color: 'white', alignItems: 'center', fontSize: 10}}>COMPLETE ORDER</Text>
+      </TouchableOpacity>
       </View>
 
+      <View style={{backgroundColor: 'white'}}>
       <View style={{justifyContent: 'space-between', flexDirection: 'row', margin: 5}}>
         <Text style={{fontSize: 10}}>YOU MAY ALSO LIKE</Text>
       </View>
 
-      <View style={{flexDirection: 'row'}}>
+      <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+      <View style={{marginLeft: 5}}>
       <View>
-      <View>
-      <Image source={require('./images/imgmenu3.png')}
-        style={{height: 50, width: 120}} />
+        <Image source={require('./../images/imgmenu1.png')} style={{height: 50, width: 120}} />
       </View>
-        <Text style={{fontSize: 10}}>CAFE 5H BY THE KITCHEN</Text>
-        <Text style={{fontSize: 10}}>Lawrence Road. Casual Dining</Text>
+        <Text style={{fontSize: 5}}>CAFE 5H BY THE KITCHEN</Text>
+        <Text style={{fontSize: 5}}>Lawrence Road. Casual Dining</Text>
         <View style={{justifyContent: 'space-between', flexDirection: 'row', margin: 5}}>
-          <Text style={{fontSize: 10}}>Open now</Text>
-          <Text style={{fontSize: 10}}></Text>
+          <Text style={{fontSize: 5}}>Open now</Text>
+          <Text style={{fontSize: 5}}></Text>
         </View>
         </View>
 
         <View>
         <View>
-        <Image source={require('./images/imgmenu3.png')}
+        <Image source={require('./../images/imgmenu2.png')}
           style={{height: 50, width: 120}} />
         </View>
-          <Text style={{fontSize: 10}}>CAFE 5H BY THE KITCHEN</Text>
-          <Text style={{fontSize: 10}}>Lawrence Road. Casual Dining</Text>
+          <Text style={{fontSize: 5}}>CAFE 5H BY THE KITCHEN</Text>
+          <Text style={{fontSize: 5}}>Lawrence Road. Casual Dining</Text>
           <View style={{justifyContent: 'space-between', flexDirection: 'row', margin: 5}}>
-            <Text style={{fontSize: 10}}>Open now</Text>
-            <Text style={{fontSize: 10}}></Text>
+            <Text style={{fontSize: 5}}>Open now</Text>
+            <Text style={{fontSize: 5}}></Text>
           </View>
           </View>
 
+          <View style={{marginRight: 10}}>
           <View>
-          <View>
-          <Image source={require('./images/imgmenu3.png')}
+          <Image source={require('./../images/imgmenu3.png')}
             style={{height: 50, width: 120}} />
           </View>
-            <Text style={{fontSize: 10}}>CAFE 5H BY THE KITCHEN</Text>
-            <Text style={{fontSize: 10}}>Lawrence Road. Casual Dining</Text>
+            <Text style={{fontSize: 5}}>CAFE 5H BY THE KITCHEN</Text>
+            <Text style={{fontSize: 5}}>Lawrence Road. Casual Dining</Text>
             <View style={{justifyContent: 'space-between', flexDirection: 'row', margin: 5}}>
-              <Text style={{fontSize: 10}}>Open now</Text>
-              <Text style={{fontSize: 10}}></Text>
+              <Text style={{fontSize: 5}}>Open now</Text>
+              <Text style={{fontSize: 5}}></Text>
             </View>
             </View>
+          </View>
+          </View>
+
+          <View style={{flexDirection: 'row', marginTop: 10}}>
+              <Image source={require('./../images/Logo.jpg')} resizeMode={Image.resizeMode.contain}
+                style={{marginTop: 10, width: 100}} />
+              <Image source={require('./../images/Home_Btn_nrm.png')}   style={{ height: 40}}  resizeMode={Image.resizeMode.contain} />
+              <Image source={require('./../images/Menu_Btn_nrm.png')}   style={{height: 40}}  resizeMode={Image.resizeMode.contain} />
+              <TouchableOpacity onPress={() => navigate('Cart')}>
+              <Image source={require('./../images/Order_Btn_nrm.png')}   style={{ height: 40}} resizeMode={Image.resizeMode.contain}
+               />
+              </TouchableOpacity>
+              <Image source={require('./../images/Notifi_Btn_nrm.png')}  style={{ height: 40}} resizeMode={Image.resizeMode.contain} />
           </View>
 
       </View>
