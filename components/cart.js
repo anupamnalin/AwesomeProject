@@ -20,36 +20,26 @@ export default class CartScreen extends React.Component {
       this.onCompleteOrder= this.onCompleteOrder.bind(this)
   }
 
+  componentDidMount() {
+    this.loadCart()
+  }
+
   loadCart() {
-    responseData=
-    {
-        "resturants": [
-            {
-            "Name": "Moets Curry Leaf",
-            "menu": {
-              "dish": "Noodle Soup",
-              "description": "Boiled noodle served in a pot with broth",
-              "price": 2.99
-              }
-            },
-            {
-              "Name": "Cafe 5h by the Kitchen",
-              "menu":[
-              {
-                "dish": "Veg Mixed Fried Rice",
-                "description": "Boiled noodle served in a pot with broth",
-                "price": 10.00,
-              },
-              {
-                "dish": "Paneer Tikka",
-                "description": "Boiled noodle served in a pot with broth",
-                "price": 5.99,
-              }
-            ]
-          }
-        ]
+    var that= this
+    fetch('http://52.87.249.223/get_resturant_data', {
+      method: 'GET',
+      headers: {
+        'Accept': 'application/json'
       }
-      }
+    }).then((response) => {
+      console.log("response", response)
+      return response.json
+    }).then((responseData) => {
+      console.log("responseData", responseData)
+    }).catch((error) => {
+      console.warn(error)
+    })
+  }
 
   onBack() {
     this.props.navigation.pop()
@@ -59,13 +49,12 @@ export default class CartScreen extends React.Component {
     header: null,
   };
 
-
   onCompleteOrder() {
 
   }
 
   render() {
-    const { goBack } = this.props.navigation;
+    const { goBack, navigate } = this.props.navigation;
 
     return (
       <View style={styles.container}>
@@ -205,15 +194,24 @@ export default class CartScreen extends React.Component {
           </View>
 
           <View style={{flexDirection: 'row', marginTop: 10}}>
-              <Image source={require('./../images/Logo.jpg')} resizeMode={Image.resizeMode.contain}
-                style={{marginTop: 10, width: 100}} />
-              <Image source={require('./../images/Home_Btn_nrm.png')}   style={{ height: 40}}  resizeMode={Image.resizeMode.contain} />
-              <Image source={require('./../images/Menu_Btn_nrm.png')}   style={{height: 40}}  resizeMode={Image.resizeMode.contain} />
-              <TouchableOpacity onPress={() => navigate('Cart')}>
-              <Image source={require('./../images/Order_Btn_nrm.png')}   style={{ height: 40}} resizeMode={Image.resizeMode.contain}
-               />
+              <Image source={require('./../images/Logo.jpg')} resizeMode={Image.resizeMode.contain} style={{marginTop: 10, width: 100}} />
+
+              <TouchableOpacity onPress={() => navigate('Home')}>
+                <Image source={require('./../images/Home_Btn_nrm.png')}   style={{ height: 40}}  resizeMode={Image.resizeMode.contain} />
               </TouchableOpacity>
+
+              <TouchableOpacity onPress={() => navigate('Menu')}>
+              <Image source={require('./../images/Menu_Btn_nrm.png')}   style={{height: 40}}  resizeMode={Image.resizeMode.contain} />
+              </TouchableOpacity>
+
+              <TouchableOpacity onPress={() => navigate('Cart')}>
+                <Image source={require('./../images/Order_Btn_nrm.png')} style={{ height: 40, backgroundColor: '#ffc04c'}} resizeMode={Image.resizeMode.contain} />
+              </TouchableOpacity>
+
+              <TouchableOpacity onPress={() => navigate('Notifications')}>
               <Image source={require('./../images/Notifi_Btn_nrm.png')}  style={{ height: 40}} resizeMode={Image.resizeMode.contain} />
+              </TouchableOpacity>
+
           </View>
 
       </View>
@@ -231,7 +229,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     flexDirection: 'row',
-    marginTop: 25,
     height: 40,
   },
 });

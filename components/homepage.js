@@ -8,11 +8,15 @@ import {
   Button,
   Modal,
   ToolbarAndroid,
-  TextInput
+  TextInput,
+  Dimensions,
+  ToastAndroid,
   } from 'react-native';
 
   import { StackNavigator } from 'react-navigation';
   import Icon from 'react-native-vector-icons/MaterialIcons';
+  var {height, width} = Dimensions.get('window');
+
   var firebase = require('firebase');
   var config = {
     apiKey: "AIzaSyAdx__QxuulyUFzyUJ2O4VV-CokIrsPZPg",
@@ -23,7 +27,9 @@ import {
     messagingSenderId: "867398835808"
   };
 
+  if (!firebase.apps.length) {
   var app = firebase.initializeApp(config);
+}
 
 export default class HomeScreen extends React.Component {
   constructor(props) {
@@ -36,7 +42,8 @@ export default class HomeScreen extends React.Component {
         name: '',
         emailRegister: '',
         passwordRegister: '',
-        confirmPassword: ''
+        confirmPassword: '',
+        notLogged: true
       }
       this.onLogin= this.onLogin.bind(this)
       this.signup= this.signup.bind(this)
@@ -48,18 +55,28 @@ export default class HomeScreen extends React.Component {
   };
 
   async signup() {
+    if (this.state.emailRegister && this.state.passwordRegister && this.state.confirmPassword) {
+      if (this.state.passwordRegister===this.state.confirmPassword) {
       try {
           await firebase.auth()
-              .createUserWithEmailAndPassword(this.state.email, this.state.password);
-
+          .createUserWithEmailAndPassword(this.state.emailRegister, this.state.passwordRegister);
           console.log("Account created");
-          this.setState({showRegister: false})
-          // Navigate to the Home page, the user is auto logged in
-
+          this.setState({showRegister: false,
+          name: '',
+          emailRegister: '',
+          passwordRegister: '',
+          confirmPassword: ''})
+          ToastAndroid.show('Successfully Registered', ToastAndroid.LONG)
       } catch (error) {
+          ToastAndroid.show('The email-address is incorrect', ToastAndroid.LONG)
           console.log(error.toString())
       }
-
+    } else {
+      ToastAndroid.show('The passwords are different', ToastAndroid.LONG)
+    }
+  } else {
+    ToastAndroid.show('Please fill all the fields to register', ToastAndroid.LONG)
+  }
   }
 
   onLogin() {
@@ -78,17 +95,15 @@ export default class HomeScreen extends React.Component {
 
   async doLogin() {
     try {
-              await firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.password);
-
-              this.setState({
-                  showLogin: false});
-
-
-
+          await firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.password);
+          this.setState({showLogin: false,
+          email: '',
+          password: '',
+          notLogged: false});
+          ToastAndroid.show('You are now logged in.', ToastAndroid.LONG)
           } catch (error) {
-              this.setState({
-                  response: error.toString()
-              })
+              this.setState({response: error.toString()})
+              ToastAndroid.show('Please enter correct email and password combination.', ToastAndroid.LONG)
           }
   }
 
@@ -100,7 +115,7 @@ export default class HomeScreen extends React.Component {
     const { navigate } = this.props.navigation;
     return (
       <View style={styles.container}>
-        <Image source={require('./../images/landing-page.png')} resizeMode={Image.resizeMode.contain} style={{height: 500, width: 480, marginTop: 20}}>
+        <Image source={require('./../images/landing-page.png')} resizeMode={Image.resizeMode.contain} style={{height: height-45, width: 480, marginTop: 20}}>
         <View style={styles.textView}>
           <Text style={[styles.heading, {fontSize: 30}]}>Food</Text>
           <Text style={[styles.heading, {fontSize: 50, marginTop: -15}]}>Panda</Text>
@@ -110,25 +125,31 @@ export default class HomeScreen extends React.Component {
           <Text style={[styles.heading, {fontSize: 10}]}>culture.</Text>
         </View>
 
+        {this.state.notLogged?
         <Button
           onPress={this.onLogin}
           title="Login"
-          />
+          /> : null}
 
         </Image>
 
-        <View style={{flexDirection: 'row', marginTop: 10}}>
-            <Image source={require('./../images/Logo.jpg')} resizeMode={Image.resizeMode.contain}
-              style={{marginTop: 10, width: 100}} />
-            <Image source={require('./../images/Home_Btn_nrm.png')}   style={{ height: 40}}  resizeMode={Image.resizeMode.contain} />
+        <View style={{flexDirection: 'row', flex: 1}}>
+            <Image source={require('./../images/Logo.jpg')} resizeMode={Image.resizeMode.contain} style={{marginTop: 10, width: 100}} />
+
+            <Image source={require('./../images/Home_Btn_nrm.png')}   style={{ height: 40, backgroundColor: '#ffc04c'}}  resizeMode={Image.resizeMode.contain} />
+
+            <TouchableOpacity onPress={() => navigate('Menu')}>
             <Image source={require('./../images/Menu_Btn_nrm.png')}   style={{height: 40}}  resizeMode={Image.resizeMode.contain} />
-            <TouchableOpacity onPress={() => navigate('Cart')}>
-            <Image source={require('./../images/Order_Btn_nrm.png')}   style={{ height: 40}} resizeMode={Image.resizeMode.contain}
-             />
             </TouchableOpacity>
+
+            <TouchableOpacity onPress={() => navigate('Cart')}>
+            <Image source={require('./../images/Order_Btn_nrm.png')}   style={{ height: 40}} resizeMode={Image.resizeMode.contain} />
+            </TouchableOpacity>
+
             <TouchableOpacity onPress={() => navigate('Notifications')}>
               <Image source={require('./../images/Notifi_Btn_nrm.png')}  style={{ height: 40}} resizeMode={Image.resizeMode.contain} />
             </TouchableOpacity>
+
         </View>
 
         <Modal
@@ -139,18 +160,23 @@ export default class HomeScreen extends React.Component {
 
 
           <TextInput
+            ref={'email'}
             style={{borderWidth: 1,  margin: 10, fontSize: 15, padding: 5, marginTop: 20}}
             onChangeText={(email) => this.setState({email})}
             value={this.state.email}
             underlineColorAndroid={'transparent'}
+            keyboardType="email-address"
+            onSubmitEditing={(event) => {this.refs.password.focus()}}
             placeholder={'Enter your email-address'}
           />
 
           <TextInput
+            ref={'password'}
             style={{borderWidth: 1,  margin: 10, fontSize: 15, padding: 5}}
             onChangeText={(password) => this.setState({password})}
             value={this.state.password}
             underlineColorAndroid={'transparent'}
+            onSubmitEditing={(event) => {this.refs.password.blur()}}
             placeholder={'Enter your password'}
           />
 
@@ -162,11 +188,11 @@ export default class HomeScreen extends React.Component {
 
             <View style={{justifyContent: 'center', alignItems: 'center', margin: 5}}>
             <TouchableOpacity onPress={this.onRegister} style={{width: 150, height: 20, alignItems: 'center', justifyContent: 'center'}}>
-              <Text style={{alignItems: 'center', fontSize: 10}}>CLICK HERE TO REGISTER</Text>
+              <Text style={{alignItems: 'center', fontSize: 12}}>CLICK HERE TO REGISTER</Text>
             </TouchableOpacity>
             </View>
 
-            <Image source={require('./../images/landing-page.png')} style={{height: 300, width: 480, marginTop: 80}}>
+            <Image source={require('./../images/landing-page.png')} style={{height: height, width: width, marginTop: 20}}>
             <View>
               <View style={{marginLeft: 10, marginTop: 10}}>
                 <Icon name="close" size={36} color="white"  onPress={() => this.onCloseLogin()} />
@@ -185,34 +211,33 @@ export default class HomeScreen extends React.Component {
             onRequestClose={() => {console.log("Modal has been closed.")}}>
 
             <TextInput
-              style={{borderWidth: 1,  margin: 10, fontSize: 15, padding: 5, marginTop: 20}}
-              onChangeText={(name) => this.setState({name})}
-              value={this.state.name}
-              underlineColorAndroid={'transparent'}
-              placeholder={'Enter your name'}
-            />
-
-            <TextInput
+              ref={'emailRegister'}
               style={{borderWidth: 1,  margin: 10, fontSize: 15, padding: 5}}
-              onChangeText={(email) => this.setState({email})}
-              value={this.state.email}
+              onChangeText={(emailRegister) => this.setState({emailRegister})}
+              value={this.state.emailRegister}
+              keyboardType="email-address"
               underlineColorAndroid={'transparent'}
+              onSubmitEditing={(event) => {this.refs.passwordRegister.focus()}}
               placeholder={'Enter your email-address'}
             />
 
             <TextInput
+              ref={'passwordRegister'}
               style={{borderWidth: 1,  margin: 10, fontSize: 15, padding: 5}}
-              onChangeText={(password) => this.setState({password})}
-              value={this.state.password}
+              onChangeText={(passwordRegister) => this.setState({passwordRegister})}
+              value={this.state.passwordRegister}
               underlineColorAndroid={'transparent'}
-              placeholder={'Enter your password'}
+              onSubmitEditing={(event) => {this.refs.confirmPassword.focus()}}
+              placeholder={'Enter at least 6 character password'}
             />
 
             <TextInput
+              ref={'confirmPassword'}
               style={{borderWidth: 1,  margin: 10, fontSize: 15, padding: 5}}
               onChangeText={(confirmPassword) => this.setState({confirmPassword})}
               value={this.state.confirmPassword}
               underlineColorAndroid={'transparent'}
+              onSubmitEditing={(event) => {this.refs.confirmPassword.blur()}}
               placeholder={'Enter your password again'}
             />
 
@@ -222,7 +247,7 @@ export default class HomeScreen extends React.Component {
             </TouchableOpacity>
             </View>
 
-            <Image source={require('./../images/landing-page.png')} style={{height: 300, width: 480, marginTop: 10}}>
+            <Image source={require('./../images/landing-page.png')} style={{height: height, width: width, marginTop: 20}}>
             <View>
               <View style={{marginLeft: 10, marginTop: 10}}>
                 <Icon name="close" size={36} color="white"  onPress={() => this.onCloseRegister()} />
