@@ -1,22 +1,23 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- * @flow
- */
+'use strict'
 
-  
-import React from 'react';
-import {
-  AppRegistry,
-  Text,
-} from 'react-native';
-import { StackNavigator } from 'react-navigation';
-import HomeScreen from './components/homepage'
-import CartScreen from './components/cart'
+// React
+import React from 'react'
+import { AppRegistry } from 'react-native'
 
-const testProject = StackNavigator({
-  Home: { screen: HomeScreen },
-  Cart: { screen: CartScreen},
-});
+// Redux
+import { Provider } from 'react-redux'
+import store from './src/store'
 
-AppRegistry.registerComponent('testProject', () => testProject);
+// Navigation
+import TabOneNavigation from './src/TabOneNavigation'
+
+class testProject extends React.Component {
+  render(){
+    return(
+      <Provider store={store}>
+      <TabOneNavigation />
+      </Provider>
+    )
+  }
+}
+AppRegistry.registerComponent('testProject', () => testProject)
