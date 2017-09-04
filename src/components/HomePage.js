@@ -3,7 +3,7 @@ import React from 'react'
 import { View, Text, TouchableOpacity, Image, Dimensions, Button } from 'react-native'
 var {height, width} = Dimensions.get('window');
 
-const HomePage = ({navigation}) => (
+const HomePage = ({navigation, isLoggedIn}) => (
       <View style={{
         flex:1,
         alignItems:'center',
@@ -14,19 +14,20 @@ const HomePage = ({navigation}) => (
 
           <Image source={require('./../../images/landing-page.png')} resizeMode={Image.resizeMode.contain} style={{height: height-60, width: 480}}>
 
-            <View style={{backgroundColor: 'rgba(0,0,0,0)', flexGrow:1, display: 'flex', justifyContent: 'center', marginLeft: 100}}>
-              <Text style={{ display: 'flex', fontSize: 30, backgroundColor: 'rgba(0,0,0,0)',  color: 'white'}}>Food</Text>
-              <Text style={{ display: 'flex', backgroundColor: 'rgba(0,0,0,0)',  color: 'white', fontSize: 50, marginTop: -15}}>Panda</Text>
-              <Text style={{ display: 'flex', backgroundColor: 'rgba(0,0,0,0)',  color: 'white', fontSize: 15}}>WHAT A TWIST</Text>
-              <Text style={{ display: 'flex', backgroundColor: 'rgba(0,0,0,0)',  color: 'white', fontSize: 10, marginTop: 5}}>The Panda, the iconic long, slim slick of bread, has </Text>
-              <Text style={{ display: 'flex', backgroundColor: 'rgba(0,0,0,0)',  color: 'white', fontSize: 10}}>traditionally one of the most potebnt symbols of french culture.</Text>
-              <Text style={{ display: 'flex', backgroundColor: 'rgba(0,0,0,0)',  color: 'white', fontSize: 10}}>culture.</Text>
+            <View style={{flexGrow:1, display: 'flex', justifyContent: 'center', marginLeft: 100}}>
+              <Text style={{ display: 'flex', fontSize: 30, color: 'white'}}>Food</Text>
+              <Text style={{ display: 'flex',  color: 'white', fontSize: 50, marginTop: -15}}>Panda</Text>
+              <Text style={{ display: 'flex',  color: 'white', fontSize: 15}}>WHAT A TWIST</Text>
+              <Text style={{ display: 'flex',  color: 'white', fontSize: 10, marginTop: 5}}>The Panda, the iconic long, slim slick of bread, has </Text>
+              <Text style={{ display: 'flex',  color: 'white', fontSize: 10}}>traditionally one of the most potebnt symbols of french culture.</Text>
+              <Text style={{ display: 'flex',  color: 'white', fontSize: 10}}>culture.</Text>
             </View>
-
+{!isLoggedIn?
           <Button
             onPress={() => navigation.navigate('Login')}
             title="Login"
             />
+            :null}
 
           </Image>
 

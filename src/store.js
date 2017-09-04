@@ -1,19 +1,25 @@
 'use strict'
 
 // Redux
-import { applyMiddleware, combineReducers, createStore } from 'redux'
+import { applyMiddleware, combineReducers, createStore, compose } from 'redux'
+import  RootReducer  from './reducers/rootReducer'
+import thunkMiddleware from 'redux-thunk'
+import createLogger from 'redux-logger'
 
 
 // Navigation
-import { NavigatorTabOne } from './navigationConfiguration'
 
 // Middleware
 
+function configureStore(initialState) {
+  const enhancer = compose(
+    applyMiddleware(
+      thunkMiddleware, // lets us dispatch() functions
+    ),
+  );
+  return createStore(RootReducer, initialState, enhancer);
+}
 
-export default createStore(
-  combineReducers({
+const store = configureStore({});
 
-    tabOne: (state,action) => NavigatorTabOne.router.getStateForAction(action,state),
-
-      })
-)
+export default store

@@ -3,7 +3,7 @@
 import { StackNavigator } from 'react-navigation'
 
 // Screens
-import HomeScreen from './components/HomePage'
+import HomeScreen from './containers/Home' 
 import OrdersScreen from './components/OrdersPage'
 import LoginScreen from './components/LoginPage'
 import RegistrationScreen from './components/RegistrationPage'

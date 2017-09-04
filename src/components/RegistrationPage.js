@@ -4,44 +4,56 @@ import { View, Text, TouchableOpacity, TextInput, Image, Dimensions } from 'reac
 var {height, width} = Dimensions.get('window');
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
-const RegistrationPage = ({navigation}) => (
+export default class RegistrationPage extends React.Component {
+  constructor(props) {
+    super(props);
+      this.state= {
+        email: '',
+        password: '',
+        notLogged: true
+      }
+  }
+
+  render() {
+    return (
         <View style={{
         flex:1,
       }}>
       <TextInput
-    //    ref={'emailRegister'}
+        ref={'emailRegister'}
         style={{borderWidth: 1,  margin: 10, fontSize: 15, padding: 5}}
-    //    onChangeText={(emailRegister) => this.setState({emailRegister})}
-    //    value={this.state.emailRegister}
+        onChangeText={(emailRegister) => this.setState({emailRegister})}
+        value={this.state.emailRegister}
         keyboardType="email-address"
         underlineColorAndroid={'transparent'}
-    //    onSubmitEditing={(event) => {this.refs.passwordRegister.focus()}}
+        onSubmitEditing={(event) => {this.refs.passwordRegister.focus()}}
         placeholder={'Enter your email-address'}
       />
 
       <TextInput
-    //    ref={'passwordRegister'}
+        ref={'passwordRegister'}
         style={{borderWidth: 1,  margin: 10, fontSize: 15, padding: 5}}
-    //    onChangeText={(passwordRegister) => this.setState({passwordRegister})}
-    //    value={this.state.passwordRegister}
+        onChangeText={(passwordRegister) => this.setState({passwordRegister})}
+        value={this.state.passwordRegister}
         underlineColorAndroid={'transparent'}
-    //    onSubmitEditing={(event) => {this.refs.confirmPassword.focus()}}
+        onSubmitEditing={(event) => {this.refs.confirmPassword.focus()}}
         placeholder={'Enter at least 6 character password'}
       />
 
       <TextInput
-    //    ref={'confirmPassword'}
+        ref={'confirmPassword'}
         style={{borderWidth: 1,  margin: 10, fontSize: 15, padding: 5}}
-    //    onChangeText={(confirmPassword) => this.setState({confirmPassword})}
-    //    value={this.state.confirmPassword}
+        onChangeText={(confirmPassword) => this.setState({confirmPassword})}
+        value={this.state.confirmPassword}
         underlineColorAndroid={'transparent'}
-    //    onSubmitEditing={(event) => {this.refs.confirmPassword.blur()}}
+        onSubmitEditing={(event) => {this.refs.confirmPassword.blur()}}
         placeholder={'Enter your password again'}
       />
 
       <View style={{justifyContent: 'center', alignItems: 'center', margin: 5}}>
       <TouchableOpacity
     //  onPress={this.signup}
+      onPress={() => this.props.dispatch(attemptSignup(this.state.email, this.state.password))}
       style={{width: 200, height: 30, alignItems: 'center', justifyContent: 'center', backgroundColor: 'orange'}}>
         <Text style={{color: 'white', alignItems: 'center', fontSize: 15}}>REGISTER</Text>
       </TouchableOpacity>
@@ -50,13 +62,13 @@ const RegistrationPage = ({navigation}) => (
       <Image source={require('./../../images/landing-page.png')} style={{height: height, width: width, marginTop: 20}}>
       <View>
         <View style={{marginLeft: 10, marginTop: 10}}>
-          <Icon name="close" size={36} color="white"  onPress={() => navigation.navigate('Home')} />
+          <Icon name="close" size={36} color="white"  onPress={() => this.props.navigation.navigate('Home')} />
         </View>
-          <Text style={{display: 'flex', backgroundColor: 'rgba(0,0,0,0)',  color: 'white', fontSize: 30, marginTop: 50, marginLeft: 20}}>REGISTER</Text>
+          <Text style={{display: 'flex', color: 'white', fontSize: 30, marginTop: 50, marginLeft: 20}}>REGISTER</Text>
       </View>
       </Image>
 
       </View>
     )
-
-    export default RegistrationPage
+  }
+}
