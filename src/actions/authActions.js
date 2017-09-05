@@ -24,9 +24,7 @@ export const attemptLogin = (email, password) =>
 
     firebase.auth().signInWithEmailAndPassword(email, password)
       .then(user => loginUserSuccess(dispatch, user))
-      .catch(() => createAccount(dispatch, email, password));
-      ToastAndroid.show('You are now logged in.', ToastAndroid.LONG)
-
+      .catch(() => loginUserFail(dispatch, email, password));
   };
 
   export const createAccount = ( email, password) =>
@@ -36,8 +34,7 @@ export const attemptLogin = (email, password) =>
   });
     firebase.auth().createUserWithEmailAndPassword(email, password)
         .then(user => loginUserSuccess(dispatch, user))
-        .catch(() => loginUserFail(dispatch));
-        ToastAndroid.show('Successfully Registered', ToastAndroid.LONG)
+        .catch(() => registerUserFail(dispatch));
 
       };
 
@@ -48,6 +45,7 @@ export const attemptLogin = (email, password) =>
     });
 
     navigateTo(dispatch, 'Home', true);
+    ToastAndroid.show('You are now logged in.', ToastAndroid.LONG)
   };
 
   const logoutUserSuccess = (dispatch) => {
@@ -58,10 +56,19 @@ export const attemptLogin = (email, password) =>
     navigateTo(dispatch, 'LoginForm', true);
   };
 
-  const loginUserFail = (dispatch) =>
+  const registerUserFail = (dispatch) => {
+    dispatch({
+      type: ActionsTypes.REGISTER_USER_FAIL,
+    });
+    ToastAndroid.show('Please fill all the fields correctly to register', ToastAndroid.LONG)
+  }
+
+  const loginUserFail = (dispatch) => {
     dispatch({
       type: ActionsTypes.LOGIN_USER_FAIL,
     });
+    ToastAndroid.show('Please enter correct email and password combination.', ToastAndroid.LONG)
+  }
 
   export const logout = () =>
     () => {

@@ -35,6 +35,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
         style={{borderWidth: 1,  margin: 10, fontSize: 15, padding: 5}}
         onChangeText={(password) => this.setState({password})}
         value={this.state.password}
+        secureTextEntry={true}
         underlineColorAndroid={'transparent'}
         onSubmitEditing={(event) => {this.refs.password.blur()}}
         placeholder={'Enter your password'}

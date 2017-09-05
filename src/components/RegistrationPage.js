@@ -38,6 +38,7 @@ import { connect } from 'react-redux';
         style={{borderWidth: 1,  margin: 10, fontSize: 15, padding: 5}}
         onChangeText={(passwordRegister) => this.setState({passwordRegister})}
         value={this.state.passwordRegister}
+        secureTextEntry={true}
         underlineColorAndroid={'transparent'}
         onSubmitEditing={(event) => {this.refs.confirmPassword.focus()}}
         placeholder={'Enter at least 6 character password'}
@@ -48,6 +49,7 @@ import { connect } from 'react-redux';
         style={{borderWidth: 1,  margin: 10, fontSize: 15, padding: 5}}
         onChangeText={(confirmPassword) => this.setState({confirmPassword})}
         value={this.state.confirmPassword}
+        secureTextEntry={true}
         underlineColorAndroid={'transparent'}
         onSubmitEditing={(event) => {this.refs.confirmPassword.blur()}}
         placeholder={'Enter your password again'}

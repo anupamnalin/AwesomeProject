@@ -5,7 +5,7 @@ var {height, width} = Dimensions.get('window');
 import {logout} from './../actions/authActions'
 import { connect } from 'react-redux';
 
-const HomePage = ({navigation, isLoggedIn}) => (
+const HomePage = ({navigation, isLoggedIn, dispatch}) => (
       <View style={{
         flex:1,
         alignItems:'center',
