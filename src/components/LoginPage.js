@@ -12,7 +12,6 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
       this.state= {
         email: '',
         password: '',
-        notLogged: true
       }
   }
   render() {

@@ -2,6 +2,8 @@
 import React from 'react'
 import { View, Text, TouchableOpacity, Image, Dimensions, Button } from 'react-native'
 var {height, width} = Dimensions.get('window');
+import {logout} from './../actions/authActions'
+import { connect } from 'react-redux';
 
 const HomePage = ({navigation, isLoggedIn}) => (
       <View style={{
@@ -22,12 +24,15 @@ const HomePage = ({navigation, isLoggedIn}) => (
               <Text style={{ display: 'flex',  color: 'white', fontSize: 10}}>traditionally one of the most potebnt symbols of french culture.</Text>
               <Text style={{ display: 'flex',  color: 'white', fontSize: 10}}>culture.</Text>
             </View>
-{!isLoggedIn?
+
+          {!isLoggedIn?
           <Button
             onPress={() => navigation.navigate('Login')}
             title="Login"
             />
-            :null}
+            :
+          null
+          }
 
           </Image>
 
@@ -49,4 +54,7 @@ const HomePage = ({navigation, isLoggedIn}) => (
        </View>
     )
 
-export default HomePage
+    const mapStateToProps = state => ({
+    });
+
+    export default connect(mapStateToProps)(HomePage);

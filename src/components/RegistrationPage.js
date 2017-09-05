@@ -3,14 +3,16 @@ import React from 'react'
 import { View, Text, TouchableOpacity, TextInput, Image, Dimensions } from 'react-native'
 var {height, width} = Dimensions.get('window');
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import {createAccount} from './../actions/authActions'
+import { connect } from 'react-redux';
 
-export default class RegistrationPage extends React.Component {
+ class RegistrationPage extends React.Component {
   constructor(props) {
     super(props);
       this.state= {
-        email: '',
-        password: '',
-        notLogged: true
+        emailRegister: '',
+        passwordRegister: '',
+        confirmPassword: '',
       }
   }
 
@@ -19,6 +21,7 @@ export default class RegistrationPage extends React.Component {
         <View style={{
         flex:1,
       }}>
+
       <TextInput
         ref={'emailRegister'}
         style={{borderWidth: 1,  margin: 10, fontSize: 15, padding: 5}}
@@ -52,8 +55,7 @@ export default class RegistrationPage extends React.Component {
 
       <View style={{justifyContent: 'center', alignItems: 'center', margin: 5}}>
       <TouchableOpacity
-    //  onPress={this.signup}
-      onPress={() => this.props.dispatch(attemptSignup(this.state.email, this.state.password))}
+      onPress={() => this.props.dispatch(createAccount(this.state.emailRegister, this.state.passwordRegister))}
       style={{width: 200, height: 30, alignItems: 'center', justifyContent: 'center', backgroundColor: 'orange'}}>
         <Text style={{color: 'white', alignItems: 'center', fontSize: 15}}>REGISTER</Text>
       </TouchableOpacity>
@@ -72,3 +74,9 @@ export default class RegistrationPage extends React.Component {
     )
   }
 }
+
+
+const mapStateToProps = state => ({
+});
+
+export default connect(mapStateToProps)(RegistrationPage);

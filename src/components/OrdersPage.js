@@ -1,7 +1,8 @@
 'use strict'
 import React from 'react'
-import { View, Text, TouchableOpacity, Image } from 'react-native'
+import { View, Text, TouchableOpacity, Image, Dimensions } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons';
+var {height, width} = Dimensions.get('window');
 
 const OrdersPage = ({navigation}) => (
       <View style={{
@@ -16,7 +17,7 @@ const OrdersPage = ({navigation}) => (
           <Text style={{color: 'white', fontSize:16, textAlign: 'center'}}>Cart</Text>
         </View>
         <View style={{marginRight: 10}}>
-          <Icon name="shopping-cart" size={26} color="white" onPress={() => this.onBack.bind(this)}/>
+          <Icon name="shopping-cart" size={26} color="white" />
         </View>
       </View>
 
@@ -34,9 +35,9 @@ const OrdersPage = ({navigation}) => (
       </View>
       <Text style={{marginTop: 24, fontSize: 10, marginLeft: 5, color: 'grey'}}>$2.99</Text>
       <View style={{marginLeft: 10, flexDirection: 'row'}}>
-      <Icon name="remove-circle-outline" size={15} style={{marginTop: 24, marginLeft: 10}} onPress={() => this.onBack.bind(this)}/>
+      <Icon name="remove-circle-outline" size={15} style={{marginTop: 24, marginLeft: 10}} />
       <Text style={{marginTop: 24, fontSize: 10, marginLeft: 5}}>1</Text>
-      <Icon name="add-circle-outline" size={15} style={{marginTop: 24, marginLeft: 10}} onPress={() => this.onBack.bind(this)}/>
+      <Icon name="add-circle-outline" size={15} style={{marginTop: 24, marginLeft: 10}} />
       </View>
       </View>
 
@@ -54,9 +55,9 @@ const OrdersPage = ({navigation}) => (
       </View>
       <Text style={{marginTop: 24, fontSize: 10, marginLeft: 5, color: 'grey'}}>$10.00</Text>
       <View style={{marginLeft: 10, flexDirection: 'row'}}>
-      <Icon name="remove-circle-outline" size={15} style={{marginTop: 24, marginLeft: 10}} onPress={() => this.onBack.bind(this)}/>
+      <Icon name="remove-circle-outline" size={15} style={{marginTop: 24, marginLeft: 10}} />
       <Text style={{marginTop: 24, fontSize: 10, marginLeft: 5}}>1</Text>
-      <Icon name="add-circle-outline" size={15} style={{marginTop: 24, marginLeft: 10}} onPress={() => this.onBack.bind(this)}/>
+      <Icon name="add-circle-outline" size={15} style={{marginTop: 24, marginLeft: 10}} />
       </View>
       </View>
 
@@ -69,9 +70,9 @@ const OrdersPage = ({navigation}) => (
       </View>
       <Text style={{marginTop: 24, fontSize: 10, marginLeft: 5, color: 'grey'}}>$5.99</Text>
       <View style={{marginLeft: 10, flexDirection: 'row'}}>
-      <Icon name="remove-circle-outline" size={15} style={{marginTop: 24, marginLeft: 10}} onPress={() => this.onBack.bind(this)}/>
+      <Icon name="remove-circle-outline" size={15} style={{marginTop: 24, marginLeft: 10}} />
       <Text style={{marginTop: 24, fontSize: 10, marginLeft: 5}}>1</Text>
-      <Icon name="add-circle-outline" size={15} style={{marginTop: 24, marginLeft: 10}} onPress={() => this.onBack.bind(this)}/>
+      <Icon name="add-circle-outline" size={15} style={{marginTop: 24, marginLeft: 10}} />
       </View>
       </View>
 

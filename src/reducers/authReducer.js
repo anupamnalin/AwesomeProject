@@ -1,6 +1,4 @@
-import {   SignUp_Success, SignUp_Fail,
-           Login_Success, Login_Fail,
-         } from '../actions/authActions';
+import * as ActionsTypes from '../actions/types';
 
 const defaultStartState = { isLoggedIn: false,
                             userObject: null,
@@ -8,18 +6,18 @@ const defaultStartState = { isLoggedIn: false,
                           }
 
 export function updateUserInfo(userAuthState = defaultStartState , action) {
+  console.log("updateUserInfo called")
+  console.log("userAuthState=", userAuthState)
   switch (action.type){
 
-    case Login_Success:
-    case SignUp_Success:
+    case ActionsTypes.LOGIN_USER_SUCCESS:
       return Object.assign({}, userAuthState, {
         isLoggedIn: true,
-        userObject: action.userObject,
+        userObject: action.payload,
         error: null
       });
 
-    case Login_Fail:
-    case SignUp_Fail:
+    case ActionsTypes.LOGIN_USER_FAIL:
       return Object.assign({}, userAuthState, {
         isLoggedIn: false,
         error: action.error
